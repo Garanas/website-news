@@ -30,12 +30,15 @@ jobs:
       - name: Extract version from release tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      - name: Build the Docker image
+      - name: Normalize Image Tag
+        run: echo "IMAGE_OWNER=$(echo ghcr.io/${{ github.repository_owner }}/website-news | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV"
+
+      - name: Build & Push Docker Image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/website-news:latest .
-          docker tag ghcr.io/${{ github.repository_owner }}/website-news:latest ghcr.io/${{ github.repository_owner }}/website-news:${{ env.VERSION }}
+          docker build -t ${{ env.IMAGE_TAG }}:latest .
+          docker tag ${{ env.IMAGE_TAG }}:latest ${{ env.IMAGE_TAG }}:${{ env.VERSION }}
 
       - name: Push the Docker image to GHCR
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/website-news:latest
-          docker push ghcr.io/${{ github.repository_owner }}/website-news:${{ env.VERSION }}
+          docker push ${{ env.IMAGE_TAG }}:latest
+          docker push ${{ env.IMAGE_TAG }}:${{ env.VERSION }}
