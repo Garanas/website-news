@@ -1,0 +1,19 @@
+services:
+  serve:
+    image: willemwijnia/website-news
+    working_dir: /usr/local/src
+    command: sh -c "bundle install && bundle exec jekyll serve --host 0.0.0.0 --livereload --watch --incremental --force_polling"
+    volumes:
+      - ./src:/usr/local/src
+    ports:
+      - "4000:4000"
+      - "35729:35729"
+    expose:
+      - 4000
+      - 35729
+    environment:
+      - JEKYLL_ENV=development
+      - PAGES_REPO_NWO=FAForever/website-news
+
+volumes:
+  src:
