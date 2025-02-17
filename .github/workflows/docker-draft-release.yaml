@@ -5,6 +5,8 @@
 # With this workflow we automate the suggestion to create a new release whenever
 # there are changes in the dependencies of the project.
 
+name: Docker - Release suggestion
+
 on:
   workflow_dispatch:
   push:

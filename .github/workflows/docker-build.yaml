@@ -6,7 +6,7 @@
 # intentionally use a release to trigger the workflow, because a maintainer can
 # then re-use the trigger whenever meaningful properties have changed.
 
-name: Build and Publish Docker Image
+name: Docker - Build and publish
 
 on:
   workflow_dispatch:
