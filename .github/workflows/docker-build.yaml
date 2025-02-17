@@ -1,0 +1,41 @@
+# The main purpose of the custom image in this repository is to reduce the time
+# that it takes to start developing. This is not just about the tool chain, it is
+# also about related packages and gems. We need to keep the image up to date.
+
+# With this workflow we generate a new image whenever a new release is created. We
+# intentionally use a release to trigger the workflow, because a maintainer can
+# then re-use the trigger whenever meaningful properties have changed.
+
+name: Build and Publish Docker Image
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Extract version from release tag
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Build the Docker image
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/website-news:latest .
+          docker tag ghcr.io/${{ github.repository_owner }}/website-news:latest ghcr.io/${{ github.repository_owner }}/website-news:${{ env.VERSION }}
+
+      - name: Push the Docker image to GHCR
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/website-news:latest
+          docker push ghcr.io/${{ github.repository_owner }}/website-news:${{ env.VERSION }}
