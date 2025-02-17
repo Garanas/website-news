@@ -1,0 +1,45 @@
+# The main purpose of the custom image in this repository is to reduce the time
+# that it takes to start developing. This is not just about the tool chain, it is
+# also about related packages and gems. We need to keep the image up to date.
+
+# With this workflow we automate the suggestion to create a new release whenever
+# there are changes in the dependencies of the project.
+
+name: Docker - Release suggestion
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "Gemfile.lock"
+
+jobs:
+  suggest-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Extract latest tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")
+          echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Generate new version number
+        run: |
+          LATEST="${{ env.LATEST_TAG }}"
+          NEW_VERSION=$(echo $LATEST | awk -F. -v OFS=. '{$NF += 1 ; print}')
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Create a draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.NEW_VERSION }}
+          name: "Release ${{ env.NEW_VERSION }}"
+          draft: true
+          body: "This release includes updated dependencies from the latest Gemfile.lock changes."
