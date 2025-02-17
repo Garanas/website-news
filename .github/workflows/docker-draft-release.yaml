@@ -14,6 +14,7 @@ on:
       - main
     paths:
       # when dependencies change then we should update the docker file
+      - "Gemfile"
       - "Gemfile.lock"
 
       # when docker related files change then we should update the docker file
