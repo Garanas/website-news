@@ -31,7 +31,9 @@ jobs:
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Normalize Image Tag
-        run: echo "IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/website-news" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+        env:
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: echo "IMAGE_TAG=ghcr.io/${REPO_OWNER,,}/website-news" >> $GITHUB_ENV
 
       - name: Build & Push Docker Image
         run: |
