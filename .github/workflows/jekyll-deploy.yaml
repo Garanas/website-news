@@ -1,4 +1,4 @@
-name: Deploy
+name: GitHub Pages - Deploy
 
 on:
   # Enable this workflow to be triggered manually
