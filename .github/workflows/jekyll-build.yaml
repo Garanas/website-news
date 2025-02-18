@@ -1,4 +1,4 @@
-name: Build
+name: Jekyll - Build
 
 on:
   workflow_call:
