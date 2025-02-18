@@ -14,7 +14,7 @@ on:
     types: [created]
 
 env:
-  IMAGE_NAME: "jekyll-development"
+  IMAGE_NAME: "website-news-jekyll-environment"
 
 jobs:
   build-and-push:
