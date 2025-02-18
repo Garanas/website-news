@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-minify:
     name: Build and minify the website
-    uses: ./.github/workflows/minify.yaml
+    uses: ./.github/workflows/jekyll-minify.yaml
 
   lighthouse:
     # A tool to measure website performance. See also:
