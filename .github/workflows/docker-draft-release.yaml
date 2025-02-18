@@ -54,4 +54,4 @@ jobs:
           tag_name: ${{ env.NEW_VERSION }}
           name: "Release ${{ env.NEW_VERSION }}"
           draft: true
-          body: "This release includes updated dependencies from the latest Gemfile.lock changes."
+          generate_release_notes: true
