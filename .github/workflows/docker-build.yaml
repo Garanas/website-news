@@ -14,7 +14,7 @@ on:
     types: [created]
 
 env:
-  IMAGE_TAG:
+  IMAGE_NAME: "jekyll-development"
 
 jobs:
   build-and-push:
@@ -55,7 +55,7 @@ jobs:
       - name: Normalize image tag
         env:
           REPO_OWNER: ${{ github.repository_owner }}
-        run: echo "IMAGE_TAG=ghcr.io/${REPO_OWNER,,}/website-news" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=ghcr.io/${REPO_OWNER,,}/${{ env.IMAGE_NAME}}" >> $GITHUB_ENV
 
       # Build the docker image.
       - name: Build the Docker image

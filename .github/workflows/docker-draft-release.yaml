@@ -13,14 +13,19 @@ on:
     branches:
       - main
     paths:
-      # when dependencies change then we should update the docker file
+      # represent reasons when we should do a release to update the docker image
+      # when dependencies change then
       - "Gemfile"
       - "Gemfile.lock"
 
-      # when docker related files change then we should update the docker file
+      # when docker related files change
       - "Dockerfile"
       - ".dockeringore"
       - "compose.yaml"
+
+      # when docker related workflows change
+      - ".github/workflows/docker-build.yaml"
+      - ".github/workflows/docker-draft-release.yaml"
 
 jobs:
   suggest-release:
