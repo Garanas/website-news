@@ -5,9 +5,9 @@ on:
     branches-ignore: deploy/gh-pages
 
 jobs:
-  build:
-    name: Build the website
-    uses: ./.github/workflows/build.yaml
+  build-and-minify:
+    name: Build and minify the website
+    uses: ./.github/workflows/minify.yaml
 
   lighthouse:
     # A tool to measure website performance. See also:
@@ -15,7 +15,7 @@ jobs:
     # - https://github.com/GoogleChrome/lighthouse-ci
     # - https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md
 
-    needs: [build]
+    needs: [build-and-minify]
     name: Lighthouse
     runs-on: ubuntu-latest
     steps:

@@ -49,27 +49,6 @@ jobs:
 
       # Post process the build
 
-      - name: Post process the build
-        run: |
-          npm install --clean
-
-          # Minify assets to reduce bundle size
-          npm run purge-css
-          npm run minify-css
-          npm run minify-js
-          npm run minify-html
-
-          # Turn the website into a PWA
-          npm run workbox-generate
-
-      # Upload artifacts for inspection
-
-      - name: Upload artifact for GitHub pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          name: "github-pages"
-          path: "src/_site/"
-
       - name: Upload artifact for CI
         uses: actions/upload-artifact@v4
         with:
