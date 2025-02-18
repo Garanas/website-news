@@ -11,7 +11,8 @@ name: Docker - Build and publish
 on:
   workflow_dispatch:
   release:
-    types: [created]
+    types:
+      - published
 
 env:
   IMAGE_NAME: "website-news-jekyll-environment"
