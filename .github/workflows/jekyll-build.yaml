@@ -20,25 +20,17 @@ jobs:
 
       - name: Restore cached images
         id: cache-images-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache@v4
         with:
           path: src/cache
-          key: cache-images-${{ hashFiles('src/assets/images/**') }}
+          key: cache-images-${{runner.os}}-${{ hashFiles('src/assets/images/**') }}
+          restore-keys: |
+            cache-images-${{runner.os}}-
 
       - name: Build with Jekyll
         run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
-
-      # We store the images to speed up the build process
-
-      - name: Save images to cache
-        if: steps.cache-images-restore.outputs.cache-hit != 'true'
-        id: cache-images-save
-        uses: actions/cache/save@v4
-        with:
-          path: src/cache
-          key: ${{ steps.cache-images-restore.outputs.cache-primary-key }}
 
       # Post process the build
 
