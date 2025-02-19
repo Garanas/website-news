@@ -3,7 +3,7 @@
 # - https://thelinuxcode.com/how-to-use-apt-install-correctly-in-your-dockerfile/
 # - https://github.com/envygeeks/jekyll-docker
 
-FROM ruby:3.4.1
+FROM ruby:3.2.7-alpine3.20
 
 ENV BUNDLE_HOME=/usr/local/bundle
 ENV BUNDLE_APP_CONFIG=/usr/local/bundle
