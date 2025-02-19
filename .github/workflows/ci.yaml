@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches-ignore: deploy/gh-pages
+    paths: src/**
 
 jobs:
   build-and-minify:
