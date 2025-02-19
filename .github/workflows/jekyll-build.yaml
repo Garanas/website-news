@@ -8,20 +8,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-20.04
-    defaults:
-      run:
-        working-directory: src
+    container: ghcr.io/garanas/website-news-jekyll-environment:0.0.1
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.3"
-          bundler-cache: true
-          cache-version: 0
-          working-directory: "${{ github.workspace }}/src"
 
       # We restore images to speed up the build process
 
@@ -29,8 +19,8 @@ jobs:
         id: cache-images-restore
         uses: actions/cache/restore@v4
         with:
-          path: src/cache
-          key: cache-images-${{ hashFiles('src/assets/images/**') }}
+          path: /user/local/src/cache
+          key: cache-images-${{ hashFiles('/user/local/src/assets/images/**') }}
 
       - name: Build with Jekyll
         run: bundle exec jekyll build
@@ -44,7 +34,7 @@ jobs:
         id: cache-images-save
         uses: actions/cache/save@v4
         with:
-          path: src/cache
+          path: user/local/src/cache
           key: ${{ steps.cache-images-restore.outputs.cache-primary-key }}
 
       # Post process the build
@@ -53,4 +43,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "build"
-          path: "src/_site/"
+          path: "/user/local/src/_site/"
