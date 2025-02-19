@@ -8,6 +8,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: src
     container: ghcr.io/garanas/website-news-jekyll-environment:0.0.1
     steps:
       - name: Clone Repository
@@ -19,8 +22,8 @@ jobs:
         id: cache-images-restore
         uses: actions/cache/restore@v4
         with:
-          path: /user/local/src/cache
-          key: cache-images-${{ hashFiles('/user/local/src/assets/images/**') }}
+          path: /src/cache
+          key: cache-images-${{ hashFiles('/src/assets/images/**') }}
 
       - name: Build with Jekyll
         run: bundle exec jekyll build
@@ -43,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "build"
-          path: "/user/local/src/_site/"
+          path: "/src/_site/"
