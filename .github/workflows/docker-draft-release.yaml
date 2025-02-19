@@ -41,6 +41,7 @@ jobs:
           sparse-checkout: .
 
           # fetch all tags to bump the latest tag
+          fetch-depth: 0
           fetch-tags: true
 
       - name: Extract latest tag
