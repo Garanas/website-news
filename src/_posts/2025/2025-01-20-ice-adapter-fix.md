@@ -11,8 +11,8 @@ priority: 1000
 redirectURL: https://forum.faforever.com/category/1/announcements
 
 image:
-    path: assets/images/2025/tournament-event-01-2024.png
-    alt: A siege of Cybran amphibious units against a Seraphim base.
+  path: assets/images/2025/gunship-slaughter-01.png
+  alt: A siege of Cybran amphibious units against a Seraphim base.
 ---
 
 Lorem ipsum odor amet, consectetuer adipiscing elit. Aenean sollicitudin mi metus id lacus parturient mi cursus. Massa mollis viverra nibh ex magnis vehicula. Posuere augue sodales taciti elit maecenas vivamus sagittis. Fusce dictumst senectus hac arcu rutrum arcu vulputate. Conubia nibh morbi parturient aenean urna et quisque tincidunt ullamcorper. Tempor faucibus arcu; molestie fermentum suscipit enim felis. Ultricies porta congue rhoncus vitae himenaeos.
