@@ -11,7 +11,7 @@ jobs:
     defaults:
       run:
         working-directory: src
-    container: ghcr.io/garanas/website-news-jekyll-environment:0.0.1
+    container: ghcr.io/garanas/website-news-jekyll-environment:latest
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
