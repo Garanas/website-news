@@ -1,11 +1,7 @@
-# Related documentation:
-# - https://jekyllrb.com/docs/installation/ubuntu/
-# - https://thelinuxcode.com/how-to-use-apt-install-correctly-in-your-dockerfile/
-# - https://github.com/envygeeks/jekyll-docker
+# Use the Debian-based Ruby slim image
+FROM ruby:3.4.2-slim
 
-FROM ruby:3.4.2-alpine
-
-# Copy over the gemfile that has all the gems that we need
+# Copy over the Gemfile that has all the required gems
 WORKDIR /temp
 COPY src/Gemfile /temp/Gemfile
 COPY src/Gemfile.lock /temp/Gemfile.lock
@@ -18,18 +14,19 @@ ENV BUNDLE_BIN=/usr/local/bundle/bin
 ENV GEM_BIN=/usr/gem/bin
 ENV GEM_HOME=/usr/gem
 
-# Install only the necessary Alpine packages and clean up in a single RUN command
-RUN apk add --no-cache --virtual .build-deps \
-  build-base \
-  zlib-dev \
+# Install necessary dependencies and clean up in a single RUN command
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  build-essential \
+  zlib1g-dev \
   git \
   imagemagick && \
-  # Dependencies for Jekyll
-  gem install bundler -v 2.6.2 && \ 
+  # Install dependencies for Jekyll
+  gem install bundler -v 2.6.2 && \
   gem install jekyll && \
   # Install gems for the project
   bundle install --no-cache && \
-  # Clean up the image to reduce its size, which speeds up the workflow
+  # Clean up the image to reduce its size
   gem clean && \
-  apk del .build-deps && \
-  rm -rf /var/cache/apk/* /usr/local/bundle/cache /usr/gem/cache
+  apt-get remove -y build-essential && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/apt/lists/* /usr/local/bundle/cache /usr/gem/cache
