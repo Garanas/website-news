@@ -49,10 +49,10 @@ jobs:
           TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")
           echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
 
-      - name: Generate new version number
+      - name: Generate new major version number
         run: |
           LATEST="${{ env.LATEST_TAG }}"
-          NEW_VERSION=$(echo $LATEST | awk -F. -v OFS=. '{$NF += 1 ; print}')
+          NEW_VERSION=$(echo "$LATEST" | awk -F. -v OFS=. '{$1 += 1; $2=0; $3=0; print}')
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Create a draft release
