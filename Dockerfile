@@ -19,7 +19,11 @@ ENV GEM_BIN=/usr/gem/bin
 ENV GEM_HOME=/usr/gem
 
 # Install only the necessary Alpine packages and clean up in a single RUN command
-RUN apk add --no-cache --virtual .build-deps build-base zlib-dev git && \
+RUN apk add --no-cache --virtual .build-deps \
+  build-base \
+  zlib-dev \
+  git \
+  imagemagick && \
   # Dependencies for Jekyll
   gem install bundler -v 2.6.2 && \ 
   gem install jekyll && \
